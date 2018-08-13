@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>ToDoList—最简单的待办事项列表</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			li{
+				list-style: none;
+			}
+			header{
+				width: 100%;
+				height: 50px;
+				background: #323232;
+			}
+			header p{
+				text-align: center;
+				line-height: 50px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			} 
+			header p span{
+				color: #ddd;
+				font-size: 20px;
+				margin-right: 150px;
+			}
+			header p input{
+				width: 400px;
+				height: 30px;
+				border-radius: 5px;
+				font-size: 20px;	
+			}
+			section{
+				width: 550px;
+				margin: 0 auto;
+				background: #fff;
+			}
+			section .doing{
+				margin: 50px 0px;
+			}
+			
+			section .doing ul li,section .done ul li{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				background: #DDDDDD;
+				padding-left: 30px;
+				height: 40px;
+			}
+			
+			section .doing ul li button,section .done ul li button{
+				border-radius: 50%;
+				width: 30px;
+				height: 30px;
+				display: block;
+				background: #323232;
+				color: #FFFFFF;
+				outline: none;
+				margin-right: 25px;
+			}
+			section .doing ul li input,section .done ul li input{
+				width: 25px;
+				height: 25px;
+				display: block;
+			}	
+			section .doing div,section .done div{
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 15px;
+			}
+			section .doing div button,section .done div button{
+				width: 25px;
+				height: 25px;
+				border-radius: 50%;
+				outline: none;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<p>
+				<span>ToDoList</span>
+				<input type="" name="" id="input" value="" />
+			</p>
+		</header>
+		
+		<section>
+			<div class="doing">
+				
+					<div id="math_doing">
+						<span>正在进行</span>
+						<button>0</button>
+					</div>
+					<ul id="doing">
+						<!--<li>
+							<input type="checkbox">
+							<span>内容</span>
+							<button>-</button>
+						</li>-->
+					</ul>
+				
+			</div>
+		
+			<div class="done">				
+				<div id="math_done">
+						<span>已经完成</span>
+						<button>0</button>
+				</div>
+					<ul id="done">
+						<!--<li>
+							<input type="checkbox">
+							<span>内容</span>
+							<button>-</button>
+						</li>-->
+					</ul>
+				
+			</div>
+				
+		</section>
+
+		<script type="text/javascript" src="js/jquery.js"> </script>
+		<script type="text/javascript">
+			$(function(){
+				$("#input").on('keydown',function(ev){
+					var evt = event || window.event;
+					var code = evt.keyCode;
+					if(code == 13){
+						var sInput = $('#input').val();
+						$('#input').val('');
+						//console.log(sInput)  //成功执行input
+						var li = `<li>
+									<input type="checkbox"/>
+									<span>${sInput}</span>
+									<button>-</button>
+								</li>`
+						$('#doing').append(li);
+						
+						var doingLength = $("#doing").children().length;
+						$("#math_doing button").html(doingLength);
+						
+//						console.log($("#math_doing button"));
+					}
+					
+					$('#doing').on('change','input[type=checkbox]',function(){  //事件委托
+						$('#done').append($(this).parent())
+						// this为什么可以指向li (this指向dom吗) .parent()这是什么意思
+
+						var doingLength = $("#doing").children().length;
+						$("#math_doing button").html(doingLength);
+						
+					});
+					$('#doing').on('click','button',function(){
+						$(this).parent().remove()
+					});
+					$('#done').on('change','input[type=checkbox]',function(){
+						$('#doing').append($(this).parent())
+					});
+					$('#done').on('click','button',function(){
+						$(this).parent().remove()
+					})
+					
+					
+					
+					
+				})	
+			})
+		</script>
+	</body>
+</html>
+
